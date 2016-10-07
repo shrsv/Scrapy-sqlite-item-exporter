@@ -1,16 +1,22 @@
-Scrapy-sqlite-item-exporter
-===========================
+# Scrapy-sqlite-item-exporter
 
-Export items to sqlite3 database crawled by scrapy 1.4
+Export items to sqlite3 database crawled by scrapy 1.2.0
 
-How to use
-===========================
+# How to use
 
-	1. Place exporters.py to your project script directory.
-	2. In settings.py,
 
-		FEED_EXPORTERS = {
-		    'sqlite': '<script directory>.exporters.SqliteItemExporter',
-		}
+1. Place `exporters.py` in the same folder as `settings.py`
+2. In settings.py, add the following line:
 
-	3. In terminal,$ scrapy crawl <spider name> -o sqlite.db -t sqlite
+    FEED_EXPORTERS = {
+        'sqlite': 'exporters.SqliteItemExporter',
+    }
+
+3. In `items.py` define the item according to the following pattern:
+
+    class QuotesItem(scrapy.Item):
+        txt = scrapy.Field() # column #1
+        author = scrapy.Field() # column #2
+        sqlite_keys = ["txt", "author"] 
+
+4. In terminal,$ scrapy crawl <spider name> -o sqlite.db -t sqlite
